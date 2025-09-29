@@ -1,0 +1,1998 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>في بيتنا برلمان -منصة تفاعلية للأطفال</title>
+    <!-- خطوط Google Fonts العربية -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- أيقونات Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2E86AB;
+            --secondary: #A23B72;
+            --accent: #F18F01;
+            --light: #F7F7F7;
+            --dark: #2B2D42;
+            --success: #27AE60;
+            --primary-bg: #F5F7FA;
+            --primary-text: #1E2A38;
+            --secondary-color: #3A6EA5;
+            --accent-color: #A0AEC0;
+            --dark-bg: #2C3E50;
+            --white: #FFFFFF;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+            flex: 1;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--secondary);
+            font-size: 1em;
+            margin-bottom: 15px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: var(--transition);
+        }
+
+        .tab-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            background: var(--accent);
+        }
+
+        .tab-content {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            min-height: 400px;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .story-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            cursor: pointer;
+            border: 3px solid transparent;
+            text-align: center;
+        }
+
+        .story-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .story-card h3 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .story-card p {
+            color: var(--dark);
+            font-size: 0.85em;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .story-image {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border: 3px solid var(--light);
+        }
+
+        .game-container {
+            text-align: center;
+            padding: 15px;
+        }
+
+        .game-board {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px auto;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .parliament-game {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+
+        .vote-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .vote-option {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .vote-option:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .emergency-game {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+
+        .emergency-scenarios {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .scenario {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .scenario:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .interactive-story {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            line-height: 1.6;
+            font-size: 1em;
+        }
+
+        .story-choices {
+            display: flex;
+            gap: 12px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .choice-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9em;
+        }
+
+        .choice-btn:hover {
+            background: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        .audio-player {
+            background: var(--light);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .audio-controls {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .audio-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .audio-btn:hover {
+            background: var(--secondary);
+        }
+
+        .character {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9em;
+        }
+
+        .character:hover {
+            background: var(--secondary);
+            transform: scale(1.1);
+        }
+
+        .libraries-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-title {
+            text-align: center;
+            color: var(--primary);
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .libraries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .library-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            cursor: pointer;
+            border: 3px solid transparent;
+        }
+
+        .library-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .library-icon {
+            font-size: 2.5em;
+            margin-bottom: 12px;
+        }
+
+        .library-card h3 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .library-card p {
+            color: var(--dark);
+            margin-bottom: 12px;
+            line-height: 1.4;
+            font-size: 0.9em;
+        }
+
+        /* تنسيقات النموذج العصري */
+        .modern-form-container {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 15px 0;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .form-icon {
+            font-size: 3em;
+            margin-bottom: 12px;
+        }
+
+        .form-header h3 {
+            color: var(--primary);
+            font-size: 1.4em;
+            margin-bottom: 8px;
+        }
+
+        .form-header p {
+            color: var(--dark);
+            font-size: 0.95em;
+            opacity: 0.8;
+        }
+
+        .form-section {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(46, 134, 171, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-number {
+            background: var(--primary);
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 12px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .section-header h4 {
+            color: var(--primary);
+            font-size: 1.1em;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .modern-group {
+            margin-bottom: 20px;
+        }
+
+        .modern-label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.9em;
+        }
+
+        .label-icon {
+            margin-left: 6px;
+            font-size: 1em;
+        }
+
+        .modern-input, .modern-textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 0.9em;
+            transition: var(--transition);
+            background: #fafafa;
+        }
+
+        .modern-input:focus, .modern-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(46, 134, 171, 0.1);
+        }
+
+        .modern-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* Radio Buttons */
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 8px 0;
+        }
+
+        .radio-option input {
+            display: none;
+        }
+
+        .radio-custom {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            margin-left: 6px;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .radio-option input:checked + .radio-custom {
+            border-color: var(--primary);
+            background: var(--primary);
+        }
+
+        .radio-option input:checked + .radio-custom::after {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+        }
+
+        .skill-option {
+            cursor: pointer;
+        }
+
+        .skill-option input {
+            display: none;
+        }
+
+        .skill-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            transition: var(--transition);
+            background: white;
+            text-align: center;
+        }
+
+        .skill-option input:checked + .skill-card {
+            border-color: var(--primary);
+            background: rgba(46, 134, 171, 0.05);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(46, 134, 171, 0.15);
+        }
+
+        .skill-icon {
+            font-size: 1.8em;
+            margin-bottom: 8px;
+        }
+
+        .skill-name {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.9em;
+        }
+
+        /* Days Grid */
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 8px;
+        }
+
+        .day-option {
+            cursor: pointer;
+        }
+
+        .day-option input {
+            display: none;
+        }
+
+        .day-card {
+            display: block;
+            padding: 12px 8px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            text-align: center;
+            transition: var(--transition);
+            background: white;
+            font-weight: 600;
+            font-size: 0.85em;
+        }
+
+        .day-option input:checked + .day-card {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Agreement */
+        .agreement-section {
+            margin-top: 20px;
+        }
+
+        .agreement-option {
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+            padding: 12px;
+            background: rgba(46, 134, 171, 0.05);
+            border-radius: 8px;
+            border: 2px solid rgba(46, 134, 171, 0.1);
+        }
+
+        .agreement-option input {
+            display: none;
+        }
+
+        .agreement-custom {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            margin-left: 8px;
+            margin-top: 2px;
+            position: relative;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .agreement-option input:checked + .agreement-custom {
+            border-color: var(--primary);
+            background: var(--primary);
+        }
+
+        .agreement-option input:checked + .agreement-custom::after {
+            content: '✓';
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            font-size: 0.8em;
+        }
+
+        .agreement-text {
+            line-height: 1.4;
+            color: var(--dark);
+            font-size: 0.85em;
+        }
+
+        .agreement-text a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .agreement-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* Submit Button */
+        .form-actions {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary), #1a5276);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 40px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 8px 25px rgba(46, 134, 171, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(46, 134, 171, 0.4);
+        }
+
+        .btn-icon {
+            font-size: 1.1em;
+        }
+
+        /* Responsive */
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* تنسيقات الفوتر */
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 30px 0 15px;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .footer-section h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #ddd;
+            line-height: 1.5;
+            margin-bottom: 8px;
+            display: block;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 0.85em;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background: var(--primary);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 15px;
+            margin-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.8em;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 0.8em;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        /* نافذة الإشعار الجميلة */
+        .notification-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .notification-box {
+            background: linear-gradient(135deg, #FFD6E0 0%, #FFEFD6 100%);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            max-width: 320px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 5px solid #FF9EBC;
+            position: relative;
+            animation: bounceIn 0.6s ease;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .kids-faces {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 15px 0;
+        }
+
+        .kid-face {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #FFB6C1 0%, #FFD700 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            border: 4px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .kid-face:nth-child(2) {
+            animation-delay: 0.5s;
+            background: linear-gradient(135deg, #87CEEB 0%, #98FB98 100%);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .notification-title {
+            color: #E91E63;
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .notification-message {
+            color: #5D4037;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            font-size: 0.95em;
+        }
+
+        .close-notification {
+            background: #E91E63;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3);
+        }
+
+        .close-notification:hover {
+            background: #C2185B;
+            transform: translateY(-2px);
+        }
+
+        .stars {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2em;
+            color: #FFD700;
+        }
+
+        /* تحسينات الأداء والتفاعل */
+        .lazy-load {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .lazy-load.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* تحسينات إضافية للتفاعل على الجوال */
+        .btn:active, 
+        .tab-btn:active,
+        .library-card:active {
+            transform: scale(0.97);
+        }
+
+        /* إضافة هوامش آمنة للشاشات ذات الشقوق */
+        @media (max-width: 768px) {
+            .container {
+                padding-left: max(15px, env(safe-area-inset-left));
+                padding-right: max(15px, env(safe-area-inset-right));
+            }
+        }
+
+        /* Media Queries من الكود الثاني */
+        @media (max-width: 992px) {
+            .libraries-grid {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            }
+            
+            .stories-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-tabs {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .tab-btn {
+                width: 100%;
+                padding: 12px;
+            }
+            
+            .stories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .vote-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .libraries-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .modern-form-container {
+                padding: 20px 15px;
+                margin: 10px 0;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .skills-grid {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            }
+            
+            .days-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .radio-group {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .section-number {
+                margin-left: 0;
+                margin-bottom: 8px;
+            }
+
+            .logo {
+                font-size: 1.6em;
+            }
+
+            .subtitle {
+                font-size: 0.9em;
+            }
+
+            .section-title {
+                font-size: 1.3em;
+            }
+
+            .library-card {
+                padding: 15px;
+            }
+
+            .story-card {
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 10px;
+            }
+            
+            header {
+                padding: 10px 15px;
+                border-radius: 15px;
+            }
+            
+            .logo {
+                font-size: 1.4em;
+            }
+            
+            .libraries-section {
+                padding: 20px 15px;
+                border-radius: 12px;
+            }
+            
+            .section-title {
+                font-size: 1.2em;
+                margin-bottom: 15px;
+            }
+            
+            .impact-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .impact-item {
+                padding: 10px;
+            }
+            
+            .impact-number {
+                font-size: 1.3em;
+            }
+            
+            .impact-text {
+                font-size: 0.8em;
+            }
+            
+            .kids-faces {
+                gap: 15px;
+            }
+            
+            .kid-face {
+                width: 70px;
+                height: 70px;
+                font-size: 2em;
+            }
+            
+            .notification-title {
+                font-size: 1.2em;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .auth-buttons-mobile {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                margin-top: 15px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .program-grid,
+            .sections-grid,
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .audience-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .impact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .days-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .kids-faces {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- نافذة الإشعار -->
+    <div class="notification-overlay" id="notificationOverlay">
+        <div class="notification-box">
+            <div class="stars">✨</div>
+            <div class="kids-faces">
+                <div class="kid-face">😊</div>
+                <div class="kid-face">😄</div>
+            </div>
+            <h3 class="notification-title">🎉 سيتم الافتتاح قريباً!</h3>
+            <p class="notification-message">نعمل بجد لتجهيز هذه المكتبة الرائعة لك. ستصبح جاهزة قريباً جداً!</p>
+            <button class="close-notification" onclick="closeNotification()">حسناً، سأنتظر!</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="logo">🏠 في بيتنا برلمان</div>
+            <div class="subtitle">منصة تفاعلية تنمي ثقافة الطفل وتطلق إبداعه </div>
+            
+            <div class="nav-tabs">
+                <button class="tab-btn active" onclick="openTab('home')">🏠 الرئيسية</button>
+                <button class="tab-btn" onclick="openTab('volunteer')">🤝 المبادرات والتطوع</button>
+                <button class="tab-btn" onclick="openTab('games')">🎮 الألعاب التعليمية</button>
+                <button class="tab-btn" onclick="openTab('parliament')">🎤 عبر عن رأيك</button>
+                <button class="tab-btn" onclick="openTab('create')">✏️ اصنع قصتك</button>
+            </div>
+        </header>
+
+        <!-- الصفحة الرئيسية -->
+        <div id="home" class="tab-content active">
+            <!-- القصص العشرة في الأعلى -->
+            <section class="libraries-section">
+                <h2 class="section-title">📖 قصصنا التفاعلية</h2>
+                <div class="stories-grid">
+                    <!-- قصة 1: في بيتنا برلمان -->
+                    <div class="story-card" onclick="openStory('parliament')">
+                        <img src="https://images.unsplash.com/photo-1759141330266-d566a8a5fd2a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwcm9maWxlLXBhZ2V8N3x8fGVufDB8fHx8fA%3D%3D" 
+                             alt="في بيتنا برلمان" class="story-image">
+                        <h3>في بيتنا برلمان</h3>
+                        <p>قصة عن عائلة تتعلم كيفية اتخاذ القرارات معاً بالحوار والمشاركة</p>
+                        <button class="choice-btn">📖 اقرأ القصة</button>
+                    </div>
+                    
+                    <!-- قصة 2: البطل الخارق -->
+                    <div class="story-card" onclick="openStory('superhero')">
+                        <img src="https://images.unsplash.com/photo-1759141330397-81de9683b22b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwcm9maWxlLXBhZ2V8OHx8fGVufDB8fHx8fA%3D%3D" 
+                             alt="البطل الخارق" class="story-image">
+                        <h3>البطل الخارق</h3>
+                        <p>قصة عن طفل يتحدى الصعوبات ويصبح بطلاً حقيقياً</p>
+                        <button class="choice-btn">📖 اقرأ القصة</button>
+                    </div>
+                    
+                    <!-- قصة 3: الرقم السحري -->
+                    <div class="story-card" onclick="openStory('magic-number')">
+                        <img src="https://images.unsplash.com/photo-1759141330661-d2f6b5ede401?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwcm9maWxlLXBhZ2V8MTB8fHxlbnwwfHx8fHw%3D" 
+                             alt="الرقم السحري 911" class="story-image">
+                        <h3>الرقم السحري</h3>
+                        <p>مغامرة أبطال يتعلمون استخدام رقم الطوارئ 911</p>
+                        <button class="choice-btn">📖 اقرأ القصة</button>
+                    </div>
+                    
+                    <!-- قصة 4: القطة السوداء -->
+                    <div class="story-card" onclick="openStory('black-cat')">
+                        <img src="https://images.unsplash.com/photo-1759141330197-7b3e5b729a5e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwcm9maWxlLXBhZ2V8M3x8fGVufDB8fHx8fA%3D%3D" 
+                             alt="القطة السوداء" class="story-image">
+                        <h3>القطة السوداء</h3>
+                        <p>قصة تتعامل مع الخرافات والتفكير المنطقي</p>
+                        <button class="choice-btn">📖 اقرأ القصة</button>
+                    </div>
+                    
+                    <!-- قصة 5: الصداقة الذكية -->
+                    <div class="story-card" onclick="openStory('friendship')">
+                        <img src="https://images.unsplash.com/photo-1759141330167-95600ad95a51?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NHx8fGVufDB8fHx8fA%3D%3D" 
+                             alt="الصداقة الذكية" class="story-image">
+                        <h3>الصداقة الذكية</h3>
+                        <p>صداقة تجمع بين الريف والمدينة</p>
+                        <button class="choice-btn">📖 اقرأ القصة</button>
+                    </div>
+                    
+                    <!-- قصة 6: القوة الحقيقية -->
+                    <div class="story-card" onclick="openStory('true-power')">
+                        <img src="https://images.unsplash.com/photo-1759141691013-2f18d6fde608?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwcm9maWxlLXBhZ2V8Mnx8fGVufDB8fHx8fA%3D%3D" 
+                             alt="القوة الحقيقية" class="story-image">
+                        <h3>القوة الحقيقية</h3>
+                        <p>قصة عن اكتشاف القوة الحقيقية داخل العقل</p>
+                        <button class="choice-btn">📖 اقرأ القصة</button>
+                    </div>
+                    
+                    <!-- قصة 7: نبع الجد سالم -->
+                    <div class="story-card" onclick="openStory('grandfather-spring')">
+                        <img src="https://images.unsplash.com/photo-1759142872123-be24cd75b4b8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwcm9maWxlLXBhZ2V8MXx8fGVufDB8fHx8fA%3D%3D" 
+                             alt="نبع الجد سالم" class="story-image">
+                        <h3>نبع الجد سالم</h3>
+                        <p>مغامرة للحفاظ على البيئة والمياه</p>
+                        <button class="choice-btn">📖 اقرأ القصة</button>
+                    </div>
+                    
+                    <!-- قصة 8: الصوت الجميل -->
+                    <div class="story-card" onclick="openStory('beautiful-voice')">
+                        <img src="https://images.unsplash.com/photo-1759141330140-0aaa5b29e129?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwcm9maWxlLXBhZ2V8Nnx8fGVufDB8fHx8fA%3D%3D" 
+                             alt="الصوت الجميل" class="story-image">
+                        <h3>الصوت الجميل</h3>
+                        <p>قصة عن الثقة بالنفس والتغلب على الخجل</p>
+                        <button class="choice-btn">📖 اقرأ القصة</button>
+                    </div>
+                    
+                    <!-- قصة 9: المكتبة الصغيرة -->
+                    <div class="story-card" onclick="openStory('small-library')">
+                        <img src="https://images.unsplash.com/photo-1759141805002-35c4075e53ab?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwcm9maWxlLXBhZ2V8MXx8fGVufDB8fHx8fA%3D%3D" 
+                             alt="المكتبة الصغيرة" class="story-image">
+                        <h3>المكتبة الصغيرة</h3>
+                        <p>قصة عن تأثير الأفكار الصغيرة في المجتمع</p>
+                        <button class="choice-btn">📖 اقرأ القصة</button>
+                    </div>
+                    
+                    <!-- قصة 10: المدينة الوردية -->
+                    <div class="story-card" onclick="openStory('pink-city')">
+                        <img src="https://images.unsplash.com/photo-1759141330226-8d6b37af0e9d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwcm9maWxlLXBhZ2V8OXx8fGVufDB8fHx8fA%3D%3D" 
+                             alt="المدينة الوردية" class="story-image">
+                        <h3>المدينة الوردية</h3>
+                        <p>رحلة استكشافية إلى مدينة البتراء</p>
+                        <button class="choice-btn">📖 اقرأ القصة</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- المكتبات في الأسفل -->
+            <section class="libraries-section">
+                <h2 class="section-title">📚 مكتباتنا التفاعلية</h2>
+                <div class="libraries-grid">
+                    <div class="library-card" onclick="openLibrary('writer')">
+                        <div class="library-icon">📝</div>
+                        <h3>الكاتب الصغير</h3>
+                        <p>مساحة ليكتب فيها الاطفال قصصهم</p>
+                        <small>10+ قصة ممتعة</small>
+                    </div>
+
+                    <div class="library-card" onclick="openLibrary('films')">
+                        <div class="library-icon">🎬</div>
+                        <h3>مكتبة الأفلام</h3>
+                        <p>مقاطع فيديو تفاعلية وثقافية</p>
+                        <small>مشاهدة وتحميل</small>
+                    </div>
+
+                    <div class="library-card" onclick="openLibrary('gallery')">
+                        <div class="library-icon">🖼️</div>
+                        <h3>معرض الصور</h3>
+                        <p>مساحة لعرض الصور الفوتغرافية</p>
+                        <small>معرض تفاعلي</small>
+                    </div>
+
+                    <div class="library-card" onclick="openLibrary('art')">
+                        <div class="library-icon">🎨</div>
+                        <h3>رسم وتلوين</h3>
+                        <p>لوحات فنية مستوحاة من الخيال</p>
+                        <small>إبداع وتلوين</small>
+                    </div>
+
+                    <div class="library-card" onclick="openLibrary('digital')">
+                        <div class="library-icon">📖</div>
+                        <h3>مكتبتي الرقمية</h3>
+                        <p>كتب وقصص رقمية للقراءة والاستماع</p>
+                        <small>تعلّم مسلي</small>
+                    </div>
+
+                    <div class="library-card" onclick="openLibrary('blog')">
+                        <div class="library-icon">📅</div>
+                        <h3>أجندة الفعاليات</h3>
+                        <p>الأنشطة التفاعلية للأطفال في الأردن</p>
+                        <small>تحديات وأنشطة</small>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- المبادرات والتطوع -->
+        <div id="volunteer" class="tab-content">
+            <h2>🤝 المبادرات والتطوع</h2>
+            <p style="text-align: center; margin-bottom: 20px; font-size: 1em; color: var(--dark);">
+                انضم إلى مجتمعنا من المتطوعين المبدعين وساهم في صنع فرق حقيقي في حياة الأطفال
+            </p>
+            
+            <div class="modern-form-container">
+                <div class="form-header">
+                    <div class="form-icon">🌟</div>
+                    <h3>نموذج انضمام للمتطوعين</h3>
+                    <p>شاركنا موهبتك وأثر في حياة الأطفال</p>
+                </div>
+                
+                <form id="volunteerForm" class="modern-form">
+                    <!-- Personal Information -->
+                    <div class="form-section">
+                        <div class="section-header">
+                            <span class="section-number">1</span>
+                            <h4>البيانات الشخصية</h4>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group modern-group">
+                                <label for="fullName" class="modern-label">
+                                    <span class="label-icon">👤</span>
+                                    الاسم الكامل
+                                </label>
+                                <input type="text" id="fullName" class="modern-input" required>
+                            </div>
+                            
+                            <div class="form-group modern-group">
+                                <label for="birthDate" class="modern-label">
+                                    <span class="label-icon">📅</span>
+                                    تاريخ الميلاد
+                                </label>
+                                <input type="date" id="birthDate" class="modern-input" required>
+                            </div>
+                            
+                            <div class="form-group modern-group">
+                                <label class="modern-label">
+                                    <span class="label-icon">⚤</span>
+                                    الجنس
+                                </label>
+                                <div class="radio-group modern-radio">
+                                    <label class="radio-option">
+                                        <input type="radio" name="gender" value="ذكر" required>
+                                        <span class="radio-custom"></span>
+                                        ذكر
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="gender" value="أنثى">
+                                        <span class="radio-custom"></span>
+                                        أنثى
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group modern-group">
+                                <label for="phone" class="modern-label">
+                                    <span class="label-icon">📱</span>
+                                    رقم الهاتف
+                                </label>
+                                <input type="tel" id="phone" class="modern-input" required>
+                            </div>
+                            
+                            <div class="form-group modern-group">
+                                <label for="email" class="modern-label">
+                                    <span class="label-icon">✉️</span>
+                                    البريد الإلكتروني
+                                </label>
+                                <input type="email" id="email" class="modern-input" required>
+                            </div>
+                            
+                            <div class="form-group modern-group">
+                                <label for="city" class="modern-label">
+                                    <span class="label-icon">🏙️</span>
+                                    المدينة/المحافظة
+                                </label>
+                                <select id="city" class="modern-input" required>
+                                    <option value="">اختر مدينتك</option>
+                                    <option value="عمان">عمان</option>
+                                    <option value="الزرقاء">الزرقاء</option>
+                                    <option value="إربد">إربد</option>
+                                    <option value="العقبة">العقبة</option>
+                                    <option value="الكرك">الكرك</option>
+                                    <option value="معان">معان</option>
+                                    <option value="المفرق">المفرق</option>
+                                    <option value="جرش">جرش</option>
+                                    <option value="مادبا">مادبا</option>
+                                    <option value="عجلون">عجلون</option>
+                                    <option value="البلقاء">البلقاء</option>
+                                    <option value="الطفيلة">الطفيلة</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Skills and Experience -->
+                    <div class="form-section">
+                        <div class="section-header">
+                            <span class="section-number">2</span>
+                            <h4>المهارات والخبرات</h4>
+                        </div>
+                        
+                        <div class="form-group modern-group">
+                            <label class="modern-label">
+                                <span class="label-icon">🎯</span>
+                                مجالات التطوع
+                            </label>
+                            <div class="skills-grid">
+                                <label class="skill-option">
+                                    <input type="checkbox" name="fields" value="القراءة والقصص">
+                                    <span class="skill-card">
+                                        <span class="skill-icon">📚</span>
+                                        <span class="skill-name">القراءة والقصص</span>
+                                    </span>
+                                </label>
+                                
+                                <label class="skill-option">
+                                    <input type="checkbox" name="fields" value="الرسم والفنون التشكيلية">
+                                    <span class="skill-card">
+                                        <span class="skill-icon">🎨</span>
+                                        <span class="skill-name">الرسم والفنون</span>
+                                    </span>
+                                </label>
+                                
+                                <label class="skill-option">
+                                    <input type="checkbox" name="fields" value="الأنشطة الإبداعية والابتكار">
+                                    <span class="skill-card">
+                                        <span class="skill-icon">💡</span>
+                                        <span class="skill-name">الأنشطة الإبداعية</span>
+                                    </span>
+                                </label>
+                                
+                                <label class="skill-option">
+                                    <input type="checkbox" name="fields" value="المسرح والتمثيل">
+                                    <span class="skill-card">
+                                        <span class="skill-icon">🎭</span>
+                                        <span class="skill-name">المسرح والتمثيل</span>
+                                    </span>
+                                </label>
+                                
+                                <label class="skill-option">
+                                    <input type="checkbox" name="fields" value="الموسيقى والغناء">
+                                    <span class="skill-card">
+                                        <span class="skill-icon">🎵</span>
+                                        <span class="skill-name">الموسيقى والغناء</span>
+                                    </span>
+                                </label>
+                                
+                                <label class="skill-option">
+                                    <input type="checkbox" name="fields" value="التمثيل الصوتي والسرد القصصي">
+                                    <span class="skill-card">
+                                        <span class="skill-icon">🎙️</span>
+                                        <span class="skill-name">التمثيل الصوتي</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group modern-group">
+                                <label class="modern-label">
+                                    <span class="label-icon">⭐</span>
+                                    خبرة مع الأطفال
+                                </label>
+                                <div class="radio-group modern-radio">
+                                    <label class="radio-option">
+                                        <input type="radio" name="experience" value="نعم" required>
+                                        <span class="radio-custom"></span>
+                                        نعم
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="experience" value="لا">
+                                        <span class="radio-custom"></span>
+                                        لا
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group modern-group full-width">
+                                <label for="experience-details" class="modern-label">
+                                    <span class="label-icon">📝</span>
+                                    تفاصيل الخبرة
+                                </label>
+                                <textarea id="experience-details" class="modern-textarea" placeholder="اخبرنا المزيد عن خبرتك مع الأطفال..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Availability -->
+                    <div class="form-section">
+                        <div class="section-header">
+                            <span class="section-number">3</span>
+                            <h4>التوافر</h4>
+                        </div>
+                        
+                        <div class="form-group modern-group">
+                            <label class="modern-label">
+                                <span class="label-icon">📅</span>
+                                الأيام المتاحة
+                            </label>
+                            <div class="days-grid">
+                                <label class="day-option">
+                                    <input type="checkbox" name="days" value="السبت">
+                                    <span class="day-card">السبت</span>
+                                </label>
+                                <label class="day-option">
+                                    <input type="checkbox" name="days" value="الأحد">
+                                    <span class="day-card">الأحد</span>
+                                </label>
+                                <label class="day-option">
+                                    <input type="checkbox" name="days" value="الاثنين">
+                                    <span class="day-card">الاثنين</span>
+                                </label>
+                                <label class="day-option">
+                                    <input type="checkbox" name="days" value="الثلاثاء">
+                                    <span class="day-card">الثلاثاء</span>
+                                </label>
+                                <label class="day-option">
+                                    <input type="checkbox" name="days" value="الأربعاء">
+                                    <span class="day-card">الأربعاء</span>
+                                </label>
+                                <label class="day-option">
+                                    <input type="checkbox" name="days" value="الخميس">
+                                    <span class="day-card">الخميس</span>
+                                </label>
+                                <label class="day-option">
+                                    <input type="checkbox" name="days" value="الجمعة">
+                                    <span class="day-card">الجمعة</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group modern-group">
+                            <label for="available-times" class="modern-label">
+                                <span class="label-icon">⏰</span>
+                                الأوقات المتاحة
+                            </label>
+                            <input type="text" id="available-times" class="modern-input" placeholder="مثال: 9 صباحاً - 2 ظهراً">
+                        </div>
+                    </div>
+
+                    <!-- Final Step -->
+                    <div class="form-section">
+                        <div class="form-group modern-group">
+                            <label for="notes" class="modern-label">
+                                <span class="label-icon">💬</span>
+                                ملاحظات إضافية
+                            </label>
+                            <textarea id="notes" class="modern-textarea" placeholder="هل لديك أي ملاحظات أو اقتراحات تود مشاركتها؟"></textarea>
+                        </div>
+                        
+                        <div class="agreement-section">
+                            <label class="agreement-option">
+                                <input type="checkbox" id="agreement" name="agreement" required>
+                                <span class="agreement-custom"></span>
+                                <span class="agreement-text">
+                                    أوافق على <a href="#">شروط الخدمة</a> و <a href="#">سياسة الخصوصية</a>، وأتعهد بتقديم معلومات صحيحة والالتزام بمعايير التطوع
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="submit-btn">
+                            <span class="btn-icon">🚀</span>
+                            انضم إلينا كمتطوع
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="volunteer-images" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;">
+                <img src="https://plus.unsplash.com/premium_photo-1683147681023-fe99f8746987?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="تطوع الأطفال" style="width: 100%; height: 160px; object-fit: cover; border-radius: 8px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+                <img src="https://images.unsplash.com/photo-1727473704274-3fbad0dbbd60?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="أنشطة الأطفال" style="width: 100%; height: 160px; object-fit: cover; border-radius: 8px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+                <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1122&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="لعب الأطفال" style="width: 100%; height: 160px; object-fit: cover; border-radius: 8px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+            </div>
+        </div>
+
+        <!-- الألعاب التعليمية -->
+        <div id="games" class="tab-content">
+            <h2>🎮 الألعاب التعليمية</h2>
+            <div class="game-container">
+                <!-- لعبة التفكير -->
+                <div class="parliament-game">
+                    <h3>🗳️ لعبة "ما أحبه أكثر"</h3>
+                    <p>اختر النشاط الذي تفضل أن تقوم به العائلة معاً:</p>
+                    <div class="vote-options">
+                        <div class="vote-option" onclick="castVote('نزهة في المنتزه')">
+                            🏞️ نزهة في المنتزه
+                        </div>
+                        <div class="vote-option" onclick="castVote('تحدي الألعاب')">
+                            🏆 تحدي الألعاب 
+                        </div>
+                        <div class="vote-option" onclick="castVote('طبخ وجبة معاً')">
+                            👨‍🍳 طبخ وجبة معاً
+                        </div>
+                        <div class="vote-option" onclick="castVote('مشروع تنظيف الحديقة')">
+                            🧹 مشروع تنظيف الحديقة
+                        </div>
+                    </div>
+                    <div id="vote-result"></div>
+                </div>
+
+                <!-- لعبة الطوارئ -->
+                <div class="emergency-game">
+                    <h3>🚨 لعبة "الرقم السحري 911"</h3>
+                    <p>متى يجب استخدام رقم الطوارئ؟ اختر الموقف الصحيح:</p>
+                    <div class="emergency-scenarios">
+                        <div class="scenario" onclick="checkEmergency('صديقك سقط من الدراجة')">
+                            🤕 صديقك سقط من الدراجة وخدش ركبته
+                        </div>
+                        <div class="scenario" onclick="checkEmergency('حريق في المطبخ')">
+                            🔥 حريق في المطبخ ولا يمكن إخماده
+                        </div>
+                        <div class="scenario" onclick="checkEmergency('اختفت لعبتك المفضلة')">
+                            🧸 اختفت لعبتك المفضلة
+                        </div>
+                        <div class="scenario" onclick="checkEmergency('غريب يحاول فتح الباب')">
+                            🚪 غريب يحاول فتح باب المنزل
+                        </div>
+                    </div>
+                    <div id="emergency-result"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- عبر عن رأيك  -->
+        <div id="parliament" class="tab-content">
+            <h2>🎤 عبر عن رأيك</h2>
+            <div class="game-board">
+                <h3>ناقش مع أصدقائك وأسرتك:</h3>
+                <div class="discussion-topic">
+                    <h4>💬 كيف يمكننا تنظيم وقت اللعب والدراسة؟</h4>
+                    <textarea id="idea-input" placeholder="اكتب فكرتك هنا..." rows="4" style="width: 100%; padding: 10px; margin: 10px 0; border-radius: 10px; border: 1px solid #ccc;"></textarea>
+                    <button class="tab-btn" onclick="submitIdea()">📤 أرسل الفكرة</button>
+                </div>
+                <div id="ideas-list" style="margin-top: 20px;"></div>
+            </div>
+        </div>
+
+        <!-- اصنع قصتك -->
+        <div id="create" class="tab-content">
+            <h2>✏️ اصنع قصتك</h2>
+            <div class="game-board">
+                <h3>اختر عناصر قصتك:</h3>
+                
+                <div style="margin: 20px 0;">
+                    <label>👥 الشخصية الرئيسية:</label>
+                    <div>
+                        <span class="character" onclick="selectCharacter('يوسف')">يوسف</span>
+                        <span class="character" onclick="selectCharacter('فرح')">فرح</span>
+                        <span class="character" onclick="selectCharacter('كريم')">كريم</span>
+                        <span class="character" onclick="selectCharacter('بطلك')">بطلك</span>
+                    </div>
+                </div>
+
+                <div style="margin: 20px 0;">
+                    <label>🏞️ المكان:</label>
+                    <div>
+                        <span class="character" onclick="selectLocation('البيت')">البيت</span>
+                        <span class="character" onclick="selectLocation('المدرسة')">المدرسة</span>
+                        <span class="character" onclick="selectLocation('الحديقة')">الحديقة</span>
+                        <span class="character" onclick="selectLocation('النبع')">النبع</span>
+                    </div>
+                </div>
+
+                <div style="margin: 20px 0;">
+                    <label>🎯 المشكلة:</label>
+                    <div>
+                        <span class="character" onclick="selectProblem('مشاجرة')">مشاجرة</span>
+                        <span class="character" onclick="selectProblem('تحدي')">تحدي</span>
+                        <span class="character" onclick="selectProblem('مغامرة')">مغامرة</span>
+                        <span class="character" onclick="selectProblem('سر')">سر</span>
+                    </div>
+                </div>
+
+                <button class="tab-btn" onclick="generateStory()">✨ أنشئ قصتي</button>
+                
+                <div id="generated-story" style="margin-top: 20px; padding: 20px; background: #f0f0f0; border-radius: 10px; display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- الفوتر -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>من نحن</h3>
+                <p>"في بيتنا برلمان منصة تفاعلية مستوحاة من مجموعة قصصية للكاتب الأردني طارق بنات، تهدف إلى تنمية ثقافة الطفل وإطلاق إبداعه من خلال قصص تفاعلية وألعاب تعليمية مبتكرة.</p>
+                <p>نثق بأن كل طفل يمتلك موهبة فريدة، ونسعى لتوفير بيئة آمنة ومحفزة تمكنه من اكتشاف هذه المواهب وتعزيز ثقته بنفسه، ليصبح صانعًا لإبداعه ومستكشفًا لعالم المعرفة بطريقة ممتعة وشيقة.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>معلومات الاتصال</h3>
+                <p>📍 الأردن - عمان</p>
+                <p>✆ 00962791234567</p>
+                <p>✉ info@parliamentathome.com</p>
+                
+                <div class="social-links">
+                    <a href="https://www.facebook.com/tariqabdallahbanat" title="فيسبوك">f</a>
+                    <a href="https://tariqabdallahbanat.blogspot.com/" title="بلوجر">b</a>
+                    <a href="https://x.com/tariqabanat" title="تويتر">t</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <a href="#" onclick="openTab('home')">الرئيسية</a>
+                <a href="#" onclick="openTab('volunteer')">المبادرات والتطوع</a>
+                <a href="#" onclick="openTab('games')">الألعاب التعليمية</a>
+                <a href="#" onclick="openTab('parliament')">عبر عن رأيك</a>
+                <a href="#" onclick="openTab('create')">اصنع قصتك</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>جميع الحقوق محفوظة &copy; 2025 "في بيتنا برلمان" - منصة تفاعلية للأطفال</p>
+            <div class="footer-links">
+                <a href="#">سياسة الخصوصية</a>
+                <a href="#">شروط الاستخدام</a>
+                <a href="#">حقوق الملكية الفكرية</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // إدارة التبويبات
+        function openTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-btn');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // فتح المكتبات مع الإشعار الجميل
+        function openLibrary(libraryType) {
+            const notification = document.getElementById('notificationOverlay');
+            notification.style.display = 'flex';
+        }
+
+        // إغلاق الإشعار
+        function closeNotification() {
+            const notification = document.getElementById('notificationOverlay');
+            notification.style.display = 'none';
+        }
+
+        // القصص التفاعلية الكاملة
+        const stories = {
+            'parliament': {
+                title: 'في بيتنا برلمان',
+                content: 'في بيت يعج بالحياة والحركة، ولا يخلو من بعض المشاجرات الصغيرة، تعيش عائلة مكونة من الأب والأم وثلاثة أطفال: يوسف الابن الأكبر، وفرح الابنة الوسطى، وكريم الابن الأصغر. كان يوسف يعتقد أن له الحق دائماً في فرض رأيه، لكن فرح لم تكن تستسلم للغضب بل كانت تدافع عن آرائها بكل ثقة.',
+                choices: [
+                    { text: 'كيف يمكن حل المشاجرة؟', outcome: 'اقترحت الأم فكرة البرلمان العائلي حيث يجتمعون كل أسبوع ليناقشوا أمورهم معاً' },
+                    { text: 'ماذا فعل يوسف؟', outcome: 'أراد يوسف أن يكون نائب رئيس البرلمان، لكن الأب شرح أن القرارات ستتخذ معاً بالتشاور' }
+                ]
+            },
+            'superhero': {
+                title: 'البطل الخارق',
+                content: 'لم يكن يوسف يختلف عن أي طفل آخر؛ فقد كان يحب اللعب والمرح، ويحلم بأن يكون بطلاً خارقاً. لكنه كان يعاني من زيادة في الوزن، جعلت حياته اليومية أكثر صعوبة، خاصة في المدرسة حيث لم يكن الجميع لطفاء معه.',
+                choices: [
+                    { text: 'كيف بدأ رحلة التغيير؟', outcome: 'بدأ يوسف في اتباع نظام غذائي صحي وممارسة الرياضة بانتظام' },
+                    { text: 'ماذا حدث في المباراة؟', outcome: 'سجل يوسف الهدف الفائز في اللحظات الأخيرة وأصبح بطلاً حقيقياً' }
+                ]
+            },
+            'magic-number': {
+                title: 'الرقم السحري',
+                content: 'هاشم، لينا، وسامر - أصدقاء يجمعهم حب فعل الخير ومساعدة الآخرين. في أحد الأيام، واجهوا عاصفة مطرية شديدة أدت إلى سقوط شجرة على أسلاك الكهرباء واشتعال النار.',
+                choices: [
+                    { text: 'ماذا فعلوا في حالة الطوارئ؟', outcome: 'اتصلوا بالرقم السحري 911 وطلبوا المساعدة فوراً' },
+                    { text: 'كيف ساعد رجال الإطفاء؟', outcome: 'أطفأ رجال الإطفاء الحريق وعادت الكهرباء للحي بأمان' }
+                ]
+            },
+            'black-cat': {
+                title: 'القطة السوداء',
+                content: 'كان راشد يعاني من يوم سيء: سكب الحليب على كتبه، وتأخر عن الحافلة، وتمزق جواربه. وبينما كان يسير مع أخته عبير، عبرت قطة سوداء طريقهما فاعتقد أنها سبب كل مشاكله.',
+                choices: [
+                    { text: 'ماذا قالت عبير لراشد؟', outcome: 'شرحت عبير أن القطة السوداء لا تجلب الحظ السيء، هذه مجرد خرافات' },
+                    { text: 'ماذا اكتشف راشد؟', outcome: 'اكتشف أن إهماله هو سبب مشاكله، وليس القطة السوداء' }
+                ]
+            },
+            'friendship': {
+                title: 'الصداقة الذكية',
+                content: 'زار حسام العاصمة عمان لأول مرة، وشعر بالدهشة وهو يتأمل الشوارع الواسعة والمباني العالية. هناك التقى بكريم الذي دعاه للعب في منزله المليء بالتكنولوجيا الحديثة.',
+                choices: [
+                    { text: 'ماذا أعجب حسام في منزل كريم؟', outcome: 'أعجبته الحديقة الذكية والمصابيح الشمسية والأجهزة المتطورة' },
+                    { text: 'كيف جمعت الصداقة بينهما؟', outcome: 'قررا المشاركة في دورة عن الزراعة الذكية تجمع بين خبرات الريف والمدينة' }
+                ]
+            },
+            'true-power': {
+                title: 'القوة الحقيقية',
+                content: 'عدنان طفل يحب الاكتشاف لكنه غير منظم. في أحد الأيام، وجد نظارات قديمة في المستودع. عندما ارتدها، سمع أصوات الأشياء تتحدث معه وتشتكي من الفوضى.',
+                choices: [
+                    { text: 'ماذا قالت له الأشياء؟', outcome: 'اشتكت الطاولة من الغبار، والكتب من عدم الترتيب، والملابس من الفوضى' },
+                    { text: 'ماذا تعلم عدنان؟', outcome: 'تعلم أن القوة الحقيقية في عقله وليس في النظارات، وعليه أن ينظم غرفته' }
+                ]
+            },
+            'grandfather-spring': {
+                title: 'نبع الجد سالم',
+                content: 'يزن يحب زيارة نبع جده سالم، لكنه لاحظ في أحد الأيام وجود قوارير وأوراق مبعثرة حول النبع. تذكر كلمات جده: "هذا النبع ليس ماءً فقط، بل سر الحياة".',
+                choices: [
+                    { text: 'كيف قرر يزن المساعدة؟', outcome: 'طلب من أصدقائه مساعدته في تنظيف النبع وجمع القوارير' },
+                    { text: 'ماذا فعلوا بالقوارير؟', outcome: 'باعوها لمصنع إعادة التدوير واشتروا برميلا للقمامة للحفاظ على النبع نظيفاً' }
+                ]
+            },
+            'beautiful-voice': {
+                title: 'الصوت الجميل',
+                content: 'سامي طفل يحب الشعر ويحفظ العديد من القصائد، لكنه يشعر بالقلق من صوتيه الحاد والخافت، ويخاف أن يسخر منه أصدقاؤه. اشترى ميكروفوناً صغيراً ليحسن صوته.',
+                choices: [
+                    { text: 'ماذا نصحته معلمته؟', outcome: 'قالت له: "جمال الصوت يأتي من قلبك، لا تخف وكن صادقاً مع نفسك"' },
+                    { text: 'كيف كانت النتيجة؟', outcome: 'ألقى سامي قصيدته بثقة وحصل على تصفيق حار من الجميع' }
+                ]
+            },
+            'small-library': {
+                title: 'المكتبة الصغيرة',
+                content: 'تالا طفلة تنتظر دورها في المركز الصحي، لاحظت لوحة بيضاء صغيرة على الجدار الرمادي. فكرت: "هذه اللوحة جعلت الجدار جميلاً، سأفعل شيئاً يجعل قاعة الانتظار مكاناً أسعد".',
+                choices: [
+                    { text: 'ماذا فعلت تالا؟', outcome: 'أتت بكتب متنوعة وأنشأت مكتبة صغيرة في قاعة الانتظار' },
+                    { text: 'كيف تأثر الناس؟', outcome: 'بدأ الناس يقرأون ويتناقشون في الكتب، وتحسنت الأجواء في المركز الصحي' }
+                ]
+            },
+            'pink-city': {
+                title: 'المدينة الوردية',
+                content: 'انطلقت الطالبات في رحلة مدرسية إلى البتراء، المدينة الوردية. استقبلهم الدليل السياحي سعد الذي أخبرهم عن تاريخ الأنباط الذين بنوا هذه المدينة العظيمة قبل أكثر من ألفي عام.',
+                choices: [
+                    { text: 'ماذا تعلمت الطالبات عن البتراء؟', outcome: 'تعلمن أن البتراء كانت مركزاً تجارياً مهماً يربط بين القوافل' },
+                    { text: 'ماذا شاهدوا قبل الخزنة؟', outcome: 'شاهدوا السيق الضيق المؤدي إلى الخزنة الكبرية حيث كان الأنباط يحفظون أموالهم' }
+                ]
+            }
+        };
+
+        function openStory(storyKey) {
+            const story = stories[storyKey];
+            document.getElementById('story-title').textContent = story.title;
+            document.getElementById('story-content').textContent = story.content;
+            
+            const choicesContainer = document.getElementById('story-choices');
+            choicesContainer.innerHTML = '';
+            
+            story.choices.forEach(choice => {
+                const button = document.createElement('button');
+                button.className = 'choice-btn';
+                button.textContent = choice.text;
+                button.onclick = () => {
+                    alert(choice.outcome);
+                };
+                choicesContainer.appendChild(button);
+            });
+            
+            document.getElementById('interactive-story').style.display = 'block';
+            openTab('stories');
+        }
+
+        // الألعاب
+        function castVote(choice) {
+            const votes = JSON.parse(localStorage.getItem('votes') || '{}');
+            votes[choice] = (votes[choice] || 0) + 1;
+            localStorage.setItem('votes', JSON.stringify(votes));
+            
+            let result = '<h4>نتائج التصويت:</h4>';
+            Object.keys(votes).forEach(option => {
+                result += `<p>${option}: ${votes[option]} صوت</p>`;
+            });
+            
+            document.getElementById('vote-result').innerHTML = result;
+        }
+
+        function checkEmergency(scenario) {
+            let result = '';
+            if (scenario === 'حريق في المطبخ' || scenario === 'غريب يحاول فتح الباب') {
+                result = '✅ صحيح! هذا موقف طارئ يجب الاتصال بالرقم 911';
+            } else {
+                result = '❌ هذا ليس موقفاً طارئاً. يمكنك طلب المساعدة من الكبار أولاً';
+            }
+            
+            document.getElementById('emergency-result').innerHTML = `<p>${result}</p>`;
+        }
+
+        // برلمان الصغير
+        function submitIdea() {
+            const idea = document.getElementById('idea-input').value;
+            if (idea.trim()) {
+                const ideas = JSON.parse(localStorage.getItem('ideas') || '[]');
+                ideas.push(idea);
+                localStorage.setItem('ideas', JSON.stringify(ideas));
+                document.getElementById('idea-input').value = '';
+                displayIdeas();
+            }
+        }
+
+        function displayIdeas() {
+            const ideas = JSON.parse(localStorage.getItem('ideas') || '[]');
+            const ideasList = document.getElementById('ideas-list');
+            ideasList.innerHTML = '<h4>الأفكار المطروحة:</h4>';
+            
+            ideas.forEach((idea, index) => {
+                const ideaElement = document.createElement('div');
+                ideaElement.style.background = '#f0f0f0';
+                ideaElement.style.padding = '10px';
+                ideaElement.style.margin = '5px 0';
+                ideaElement.style.borderRadius = '5px';
+                ideaElement.textContent = `${index + 1}. ${idea}`;
+                ideasList.appendChild(ideaElement);
+            });
+        }
+
+        // اصنع قصتك
+        let selectedCharacter = '';
+        let selectedLocation = '';
+        let selectedProblem = '';
+
+        function selectCharacter(char) {
+            selectedCharacter = char;
+            document.querySelectorAll('.character').forEach(el => el.style.background = 'var(--accent)');
+            event.target.style.background = 'var(--secondary)';
+        }
+
+        function selectLocation(loc) {
+            selectedLocation = loc;
+        }
+
+        function selectProblem(prob) {
+            selectedProblem = prob;
+        }
+
+        function generateStory() {
+            if (!selectedCharacter || !selectedLocation || !selectedProblem) {
+                alert('⚠️ الرجاء اختيار جميع العناصر أولاً');
+                return;
+            }
+
+            const stories = [
+                `في يوم من الأيام، كان ${selectedCharacter} في ${selectedLocation}، وواجه ${selectedProblem} كبير. لكنه استخدم ذكائه وتعاون مع أصدقائه لحل المشكلة.`,
+                `ذات مساء، اكتشف ${selectedCharacter} في ${selectedLocation} أن هناك ${selectedProblem}. قرر أن يكون شجاعاً ويتعامل مع الموقف بحكمة.`,
+                `خلال رحلة إلى ${selectedLocation}، واجه ${selectedCharacter} ${selectedProblem} غير متوقع. لكنه تعلم درساً قيماً عن الصداقة والتعاون.`
+            ];
+
+            const randomStory = stories[Math.floor(Math.random() * stories.length)];
+            document.getElementById('generated-story').innerHTML = `
+                <h4>قصتك الجديدة:</h4>
+                <p>${randomStory}</p>
+                <button class="tab-btn" onclick="saveStory()">💾 حفظ القصة</button>
+            `;
+            document.getElementById('generated-story').style.display = 'block';
+        }
+
+        function saveStory() {
+            const story = document.querySelector('#generated-story p').textContent;
+            const savedStories = JSON.parse(localStorage.getItem('savedStories') || '[]');
+            savedStories.push(story);
+            localStorage.setItem('savedStories', JSON.stringify(savedStories));
+            alert('✅ تم حفظ قصتك بنجاح!');
+        }
+
+        // محاكاة مشغل الصوت
+        function playAudio() {
+            alert('🎵 تشغيل القصة الصوتية... (هذه محاكاة)');
+        }
+
+        function pauseAudio() {
+            alert('⏸ إيقاف الصوت مؤقتاً');
+        }
+
+        // معالجة نموذج التطوع
+        document.getElementById('volunteerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('شكراً لتقديم طلب التطوع! سنتواصل معك قريباً.');
+            this.reset();
+        });
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            displayIdeas();
+            
+            // تحميل الكسول للصور والعناصر
+            const lazyLoadElements = document.querySelectorAll('.lazy-load');
+            const lazyObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        lazyObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            lazyLoadElements.forEach(element => {
+                lazyObserver.observe(element);
+            });
+        });
+
+        // منع الزوم المزدوج على الجوال
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+    </script>
+</body>
+</html>
