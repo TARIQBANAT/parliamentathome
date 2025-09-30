@@ -163,6 +163,92 @@
             border: 3px solid var(--light);
         }
 
+        /* إضافة أنماط قسم القصة التفاعلي */
+        .story-reader {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .story-reader.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .story-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .story-title {
+            color: var(--primary);
+            font-size: 1.5em;
+            margin: 0;
+        }
+
+        .back-to-stories {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .back-to-stories:hover {
+            background: var(--secondary);
+            transform: translateX(-5px);
+        }
+
+        .story-content {
+            line-height: 1.8;
+            font-size: 1.1em;
+            color: var(--dark);
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        .story-choices {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .choice-result {
+            background: rgba(46, 134, 171, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid var(--primary);
+            margin: 10px 0;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .story-complete {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--success), #219653);
+            color: white;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .story-audio {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
         .game-container {
             text-align: center;
             padding: 15px;
@@ -232,23 +318,6 @@
 
         .scenario:hover {
             background: rgba(255, 255, 255, 0.3);
-        }
-
-        .interactive-story {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 15px 0;
-            line-height: 1.6;
-            font-size: 1em;
-        }
-
-        .story-choices {
-            display: flex;
-            gap: 12px;
-            margin: 15px 0;
-            flex-wrap: wrap;
-            justify-content: center;
         }
 
         .choice-btn {
@@ -369,7 +438,7 @@
             font-size: 0.9em;
         }
 
-        /* تنسيقات النموذج العصري */
+        /* تنسيقات النموذج العصبي */
         .modern-form-container {
             background: white;
             border-radius: 15px;
@@ -1013,6 +1082,16 @@
             .story-card {
                 padding: 12px;
             }
+
+            .story-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .story-title {
+                font-size: 1.3em;
+            }
         }
 
         @media (max-width: 576px) {
@@ -1039,23 +1118,6 @@
                 margin-bottom: 15px;
             }
             
-            .impact-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-            
-            .impact-item {
-                padding: 10px;
-            }
-            
-            .impact-number {
-                font-size: 1.3em;
-            }
-            
-            .impact-text {
-                font-size: 0.8em;
-            }
-            
             .kids-faces {
                 gap: 15px;
             }
@@ -1073,30 +1135,9 @@
             .footer-content {
                 grid-template-columns: 1fr;
             }
-            
-            .auth-buttons-mobile {
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-                margin-top: 15px;
-            }
         }
 
         @media (max-width: 380px) {
-            .program-grid,
-            .sections-grid,
-            .blog-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .audience-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .impact-grid {
-                grid-template-columns: 1fr;
-            }
-            
             .skills-grid {
                 grid-template-columns: 1fr;
             }
@@ -1130,7 +1171,7 @@
 
     <div class="container">
         <header>
-            <div class="logo">🏠 في بيتنا برلمان</div>
+            <div class="logo">🏛️ في بيتنا برلمان</div>
             <div class="subtitle">منصة تفاعلية تنمي ثقافة الطفل وتطلق إبداعه </div>
             
             <div class="nav-tabs">
@@ -1144,8 +1185,34 @@
 
         <!-- الصفحة الرئيسية -->
         <div id="home" class="tab-content active">
+            <!-- قسم القارئ التفاعلي للقصص -->
+            <div class="story-reader" id="storyReader">
+                <div class="story-header">
+                    <h2 class="story-title" id="storyTitle">عنوان القصة</h2>
+                    <button class="back-to-stories" onclick="closeStoryReader()">
+                        ← العودة للقصص
+                    </button>
+                </div>
+                
+                <div class="story-content" id="storyContent">
+                    محتوى القصة سيظهر هنا...
+                </div>
+                
+                <div class="story-choices" id="storyChoices">
+                    <!-- الخيارات التفاعلية تظهر هنا -->
+                </div>
+                
+                <div class="story-audio">
+                    <h4>🎵 استمع للقصة</h4>
+                    <div class="audio-controls">
+                        <button class="audio-btn" onclick="playAudio()">▶ تشغيل القصة</button>
+                        <button class="audio-btn" onclick="pauseAudio()">⏸ إيقاف مؤقت</button>
+                    </div>
+                </div>
+            </div>
+
             <!-- القصص العشرة في الأعلى -->
-            <section class="libraries-section">
+            <section class="libraries-section" id="storiesSection">
                 <h2 class="section-title">📖 قصصنا التفاعلية</h2>
                 <div class="stories-grid">
                     <!-- قصة 1: في بيتنا برلمان -->
@@ -1563,9 +1630,9 @@
             </div>
             
             <div class="volunteer-images" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;">
-                <img src="https://plus.unsplash.com/premium_photo-1683147681023-fe99f8746987?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="تطوع الأطفال" style="width: 100%; height: 160px; object-fit: cover; border-radius: 8px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
-                <img src="https://images.unsplash.com/photo-1727473704274-3fbad0dbbd60?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="أنشطة الأطفال" style="width: 100%; height: 160px; object-fit: cover; border-radius: 8px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
-                <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1122&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="لعب الأطفال" style="width: 100%; height: 160px; object-fit: cover; border-radius: 8px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+                <img src="https://images.unsplash.com/photo-1727473704274-3fbad0dbbd60?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="تطوع الأطفال" style="width: 100%; height: 160px; object-fit: cover; border-radius: 8px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+                <img src="https://images.unsplash.com/photo-1660798027105-5da8ad164e27?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="أنشطة الأطفال" style="width: 100%; height: 160px; object-fit: cover; border-radius: 8px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+                <img src="https://images.unsplash.com/photo-1555079011-17111cb67454?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="لعب الأطفال" style="width: 100%; height: 160px; object-fit: cover; border-radius: 8px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
             </div>
         </div>
 
@@ -1717,30 +1784,6 @@
     </footer>
 
     <script>
-        // إدارة التبويبات
-        function openTab(tabName) {
-            const tabs = document.querySelectorAll('.tab-content');
-            const buttons = document.querySelectorAll('.tab-btn');
-            
-            tabs.forEach(tab => tab.classList.remove('active'));
-            buttons.forEach(btn => btn.classList.remove('active'));
-            
-            document.getElementById(tabName).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
-
-        // فتح المكتبات مع الإشعار الجميل
-        function openLibrary(libraryType) {
-            const notification = document.getElementById('notificationOverlay');
-            notification.style.display = 'flex';
-        }
-
-        // إغلاق الإشعار
-        function closeNotification() {
-            const notification = document.getElementById('notificationOverlay');
-            notification.style.display = 'none';
-        }
-
         // القصص التفاعلية الكاملة
         const stories = {
             'parliament': {
@@ -1825,26 +1868,105 @@
             }
         };
 
+        // إدارة التبويبات
+        function openTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-btn');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // دالة فتح القصة المعدلة
         function openStory(storyKey) {
             const story = stories[storyKey];
-            document.getElementById('story-title').textContent = story.title;
-            document.getElementById('story-content').textContent = story.content;
+            if (!story) {
+                alert('القصة غير متوفرة حالياً');
+                return;
+            }
             
-            const choicesContainer = document.getElementById('story-choices');
-            choicesContainer.innerHTML = '';
+            // إخفاء قسم القصص وإظهار القارئ
+            document.getElementById('storiesSection').style.display = 'none';
+            document.getElementById('storyReader').classList.add('active');
             
-            story.choices.forEach(choice => {
+            // تحديث محتوى القصة
+            document.getElementById('storyTitle').textContent = story.title;
+            document.getElementById('storyContent').textContent = story.content;
+            
+            // إعداد الخيارات التفاعلية
+            const choicesContainer = document.getElementById('storyChoices');
+            choicesContainer.innerHTML = '<h3>اختر ما تريد فعله:</h3>';
+            
+            story.choices.forEach((choice, index) => {
                 const button = document.createElement('button');
                 button.className = 'choice-btn';
                 button.textContent = choice.text;
                 button.onclick = () => {
-                    alert(choice.outcome);
+                    // عرض نتيجة الخيار
+                    const resultDiv = document.createElement('div');
+                    resultDiv.className = 'choice-result';
+                    resultDiv.innerHTML = `
+                        <strong>${choice.text}</strong>
+                        <p style="margin: 10px 0 0 0;">${choice.outcome}</p>
+                    `;
+                    
+                    // إدراج النتيجة قبل الأزرار
+                    choicesContainer.appendChild(resultDiv);
+                    
+                    // إخفاء الزر بعد النقر عليه
+                    button.style.display = 'none';
+                    
+                    // إذا كانت هذه آخر خيار، إضافة رسالة إنهاء
+                    const remainingButtons = choicesContainer.querySelectorAll('.choice-btn:not([style*="display: none"])');
+                    if (remainingButtons.length === 0) {
+                        const completeDiv = document.createElement('div');
+                        completeDiv.className = 'story-complete';
+                        completeDiv.innerHTML = `
+                            <h3>🎉 أحسنت! لقد أنهيت القصة</h3>
+                            <p>شاركنا رأيك في القصة عبر قسم "عبر عن رأيك"</p>
+                            <button class="choice-btn" onclick="closeStoryReader()" style="margin-top: 10px;">
+                                📚 العودة للقصص
+                            </button>
+                        `;
+                        choicesContainer.appendChild(completeDiv);
+                    }
                 };
                 choicesContainer.appendChild(button);
             });
+        }
+
+        // دالة إغلاق القارئ والعودة للقصص
+        function closeStoryReader() {
+            document.getElementById('storyReader').classList.remove('active');
+            document.getElementById('storiesSection').style.display = 'block';
             
-            document.getElementById('interactive-story').style.display = 'block';
-            openTab('stories');
+            // إعادة تعيين الخيارات
+            document.getElementById('storyChoices').innerHTML = '';
+        }
+
+        // دالة تشغيل الصوت للقصة
+        function playAudio() {
+            const storyTitle = document.getElementById('storyTitle').textContent;
+            alert(`🎵 تشغيل القصة الصوتية: ${storyTitle}\n\n(هذه محاكاة - في التطبيق الحقيقي سيتم تشغيل الصوت)`);
+        }
+
+        function pauseAudio() {
+            alert('⏸ إيقاف الصوت مؤقتاً');
+        }
+
+        // فتح المكتبات مع الإشعار الجميل
+        function openLibrary(libraryType) {
+            const notification = document.getElementById('notificationOverlay');
+            notification.style.display = 'flex';
+        }
+
+        // إغلاق الإشعار
+        function closeNotification() {
+            const notification = document.getElementById('notificationOverlay');
+            notification.style.display = 'none';
         }
 
         // الألعاب
@@ -1946,15 +2068,6 @@
             savedStories.push(story);
             localStorage.setItem('savedStories', JSON.stringify(savedStories));
             alert('✅ تم حفظ قصتك بنجاح!');
-        }
-
-        // محاكاة مشغل الصوت
-        function playAudio() {
-            alert('🎵 تشغيل القصة الصوتية... (هذه محاكاة)');
-        }
-
-        function pauseAudio() {
-            alert('⏸ إيقاف الصوت مؤقتاً');
         }
 
         // معالجة نموذج التطوع
